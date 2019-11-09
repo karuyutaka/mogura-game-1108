@@ -77,53 +77,128 @@
 
 <body id="game">
 	<div class="field">
+		
 		<h1><img src="images/title.png" alt=""></h1>
+		
 		<div class="container">
 			<div class="relative">
 				<img class="ana" src="images/穴.png">
-				<img class="mogura uwagaki" src="images/モグ2.png">
+				<img class="mogura uwagaki" src="">
 			</div>
 			<div class="relative">
 				<img class="ana" src="images/穴.png">
-				<img class="mogura uwagaki" src="images/モグ2.png">
+				<img class="mogura uwagaki" src="">
 			</div>
 			<div class="relative">
 				<img class="ana" src="images/穴.png">
-				<img class="mogura uwagaki" src="images/モグ2.png">
+				<img class="mogura uwagaki" src="">
 			</div>
 		</div>
 		<div class="container">
 			<div class="relative">
 				<img class="ana" src="images/穴.png">
-				<img class="mogura uwagaki" src="images/モグ2.png">
+				<img class="mogura uwagaki" src="">
 			</div>
 			<div class="relative">
 				<img class="ana" src="images/穴.png">
-				<img class="mogura uwagaki" src="images/モグ2.png">
+				<img class="mogura uwagaki" src="">
 			</div>
 			<div class="relative">
 				<img class="ana" src="images/穴.png">
-				<img class="mogura uwagaki" src="images/モグ2.png">
+				<img class="mogura uwagaki" src="">
 			</div>
 		</div>
 		<div class="container">
 			<div class="relative">
 				<img class="ana" src="images/穴.png">
-				<img class="mogura uwagaki" src="images/モグ2.png">
+				<img class="mogura uwagaki" src="">
 			</div>
 			<div class="relative">
 				<img class="ana" src="images/穴.png">
-				<img class="mogura uwagaki" src="images/モグ2.png">
+				<img class="mogura uwagaki" src="">
 			</div>
 			<div class="relative">
 				<img class="ana" src="images/穴.png">
-				<img class="mogura uwagaki" src="images/モグ2.png">
+				<img class="mogura uwagaki" src="">
 			</div>
 		</div>
 	</div>
+	
+	<div id="message"></div>
+	
 
 	<script>
 		// ここにJavaScriptを書く
+		//全てのモグラにクリックイベントを登録する
+		const itagaruMogura = "images/モグ1.png";
+		const nomalMogura = "images/モグ2.png";
+		var moguras = document.querySelectorAll(".mogura");
+		var score = 0;
+		
+		for(let index = 0; index < moguras.length; index++){
+			const element = moguras[index];
+			element.onclick = hitMogura;
+		}
+
+		//モグラが叩かれる
+		function hitMogura(){
+			var mogura = event.target;
+			mogura.src  = itagaruMogura;
+			score++;
+			console.log(score);
+  			document.getElementById("message").innerHTML = score;
+			//setTimeout(moguruMogura,500,mogura);
+			//setTimeout(kakureruMogura,3000,mogura);
+			
+		}
+
+		//元のモグラの画像
+		//function moguruMogura(a){
+		//	a.src  = nomalMogura;
+		//}
+
+		//モグラが隠れる
+		function kakureruMogura(mogura){
+			mogura.src  = "";
+		}
+
+
+
+		//１秒後にモグラ出現
+		setInterval(deruMogura,1000);
+
+		//モグラをだす関数
+		function deruMogura(){
+			var random = Math.floor(Math.random() * 9); 
+			var mogura = moguras[random];
+				mogura.src = nomalMogura;
+			//日本語が含まれているのでデコードした
+			var decode = decodeURI(mogura.src)
+			//2秒後にモグラが隠れる
+			setTimeout((mogura) => {
+				if(decode.indexOf(nomalMogura) != -1){
+					kakureruMogura(mogura)	
+				} 
+			},2000,mogura);
+		}
+
+		
+
+		function endTime(mogura){
+			//event.preventDefault();
+			mogura.src  = "";
+			setInterval(endTime,30000,mogura);
+		}
+
+
+		var finishGame = function(){
+
+  			alert("ゲーム終了");
+		}
+		setTimeout(finishGame, 30000);
+
+
+
 	</script>
 </body>
 
